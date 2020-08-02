@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# adjust-brightness.sh: uses xrandr to adjust brightness levels of monitors
+#
+# see https://www.ostechnix.com/how-to-adjust-monitor-brightness-from-command-line-in-linux/
+#
+# get list of connected displays
+# xrandr -q | grep ' connected' | cut -d ' ' -f1
+#
+# e.g. xrandr --output LVDS-1 --brightness 0.7
+# sets brightness for LVDS-1 to 70%
+# WARNING
+# this script is very personal, i.e. it is tailored to my specific monitors and environment setup.
+# please identify and/or place your edits to your monitor name(s)
+
+
+CURRENTDATE=$(date +"%x %r %Z") 
+MONITORLIST=$(xrandr --listmonitors | cut -d ' ' -f6)
+LEFTMONITOR=$(xrandr --listmonitors | head -n 2 | cut -d ' ' -f6)
+RIGHTMONITOR=$(xrandr --listmonitors | tail -n 1 | cut -d ' ' -f6)
+LOGFILE="/home/leo/scripts/log/adjust-brightness.log"
+
+# output list of connected displays
+echo -e "\nConnected monitors: $MONITORLIST\n"
+
+# prompt for brightness setting
+read -p "Adjust brightness to [0.1-0.9/1.0]: "
+echo
+case ${REPLY} in
+    0.[1-9] | 1.0) 
+        echo "Adjusting left monitor..."
+        xrandr --output $LEFTMONITOR --brightness $REPLY
+        sleep 1
+
+        echo "Adjusting right monitor..."
+        sleep 1
+        xrandr --output $RIGHTMONITOR --brightness $REPLY
+
+        echo -e "Monitor brightness set to "${REPLY}" on "${CURRENTDATE}"\n" | tee -a $LOGFILE
+        echo -e "done.\n"
+
+        ;;
+    q|Q)
+        exit 0
+        ;;
+    *)
+        echo "ERROR: wrong input"
+        exit 1
+        ;;
+esac
+
+exit 0
