@@ -10,15 +10,15 @@
 # e.g. xrandr --output LVDS-1 --brightness 0.7
 # sets brightness for LVDS-1 to 70%
 # WARNING
-# this script is very personal, i.e. it is tailored to my specific monitors and environment setup.
-# please identify and/or place your edits to your monitor name(s)
+# this script is tailored to my specific monitors and environment setup.
+# Please identify and/or place your edits using your monitor name(s)
 
 
 CURRENTDATE=$(date +"%x %r %Z") 
 MONITORLIST=$(xrandr --listmonitors | cut -d ' ' -f6)
 LEFTMONITOR=$(xrandr --listmonitors | head -n 2 | cut -d ' ' -f6)
 RIGHTMONITOR=$(xrandr --listmonitors | tail -n 1 | cut -d ' ' -f6)
-LOGFILE="/home/leo/scripts/log/adjust-brightness.log"
+LOGFILE="$HOME/leo/scripts/log/adjust-brightness.log"
 
 # output list of connected displays
 echo -e "\nConnected monitors: $MONITORLIST\n"
@@ -36,12 +36,12 @@ case ${REPLY} in
         sleep 1
         xrandr --output $RIGHTMONITOR --brightness $REPLY
 
-        echo -e "Monitor brightness set to "${REPLY}" on "${CURRENTDATE}"\n" | tee -a $LOGFILE
+        echo -e "Monitor brightness set to "${REPLY}" on "${CURRENTDATE}"\n" 2>&1 | tee -a $LOGFILE
         echo -e "done.\n"
 
         ;;
     q|Q)
-        exit 0
+        exit 
         ;;
     *)
         echo "ERROR: wrong input"
