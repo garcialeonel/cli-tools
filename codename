@@ -1,0 +1,19 @@
+#!/usr/bin/python3
+
+# codename: grabs two words from the American English dictionary 
+#           and combines them together to form a codename 
+
+import random
+import os
+
+if os.path.exists('/usr/share/dict'):
+    with open('/usr/share/dict/wordlist') as filename:
+        words = [line.rstrip() for line in filename]
+    codename = random.choice(words)+random.choice(words)
+    print('\n',codename.upper())
+else:
+    print('ERROR: /usr/share/dict does not exist')
+
+# helpful links
+# https://www.pythonforbeginners.com/random/how-to-use-the-random-module-in-python
+# https://stackoverflow.com/questions/3277503/how-to-read-a-file-line-by-line-into-a-list
