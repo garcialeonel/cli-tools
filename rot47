@@ -1,0 +1,20 @@
+#!/bin/bash -eu
+
+# ascii art grabbed from https://tinyurl.com/ybex896r
+# echo "
+# ██████╗  ██████╗ ████████╗██╗  ██╗███████╗
+# ██╔══██╗██╔═══██╗╚══██╔══╝██║  ██║╚════██║
+# ██████╔╝██║   ██║   ██║   ███████║    ██╔╝
+# ██╔══██╗██║   ██║   ██║   ╚════██║   ██╔╝ 
+# ██║  ██║╚██████╔╝   ██║        ██║   ██║  
+# ╚═╝  ╚═╝ ╚═════╝    ╚═╝        ╚═╝   ╚═╝  
+                                          
+# "
+echo -n "Enter text to encrypt/decrypt: "
+read string
+echo "Encrypting/Decrypting text...
+"
+echo "...
+"
+tr '\!-~' 'P-~\!-O' <<< $string
+echo

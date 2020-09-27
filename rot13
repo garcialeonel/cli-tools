@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# ascii art grabbed from https://tinyurl.com/ybex896r
+# echo "
+# ██████╗  ██████╗ ████████╗ ██╗██████╗ 
+# ██╔══██╗██╔═══██╗╚══██╔══╝███║╚════██╗
+# ██████╔╝██║   ██║   ██║   ╚██║ █████╔╝
+# ██╔══██╗██║   ██║   ██║    ██║ ╚═══██╗
+# ██║  ██║╚██████╔╝   ██║    ██║██████╔╝
+# ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═╝╚═════╝ 
+#                                                                         "
+
+while [[ -z $REPLY ]]; do
+    read -p "Enter text to encrypt/decrypt: "
+
+    echo "Encrypting/Decrypting text...
+    "
+    echo "...
+    "
+    tr [A-Za-z] [N-ZA-Mn-za-m] <<< $REPLY
+done

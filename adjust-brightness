@@ -18,7 +18,7 @@ CURRENTDATE=$(date +"%x %r %Z")
 MONITORLIST=$(xrandr --listmonitors | cut -d ' ' -f6)
 LEFTMONITOR=$(xrandr --listmonitors | head -n 2 | cut -d ' ' -f6)
 RIGHTMONITOR=$(xrandr --listmonitors | tail -n 1 | cut -d ' ' -f6)
-LOGFILE="$HOME/leo/scripts/log/adjust-brightness.log"
+LOGFILE="$HOME/scripts/log/adjust-brightness.log"
 
 # output list of connected displays
 echo -e "\nConnected monitors: $MONITORLIST\n"

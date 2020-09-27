@@ -1,0 +1,91 @@
+#!/bin/bash
+# set -o verbose
+# memgen.sh: creates meme using ImageMagick convert command
+
+# Thanks to @climagic https://twitter.com/climagic/status/1278437675926765568
+
+# command example
+# convert <image-file>.png 
+#     -font impact 
+#     -fill white 
+#     -pointsize 84 
+#     -stroke black 
+#     -strokewidth 3 
+#     -gravity north 
+#     -annotate +0+20 
+#     'TOP MESSAGE TEXT' 
+#     -gravity south 
+#     -annotate +0+20 
+#     'BOTTOM MESSAGE TEXT' 
+#     <output-file>.png 
+
+PROGNAME=$(basename $0)
+CONVERT=/usr/bin/convert
+
+usage() {
+
+    option_string="\
+        font: impact
+        fill: white
+        pointsize: 84
+        stroke: black
+        strokewidth: 3"
+
+    description_string="\
+        Uses convert command to produce a meme png of a user supplied png image.
+        File must be a PNG image file. "
+
+    usage_string="usage: ${PROGNAME} [ -v | --verbose ] [ -f | --file ] <image-file>.png  [ -t | --text ] '<top-text,lower-text>' [ -o | --output ] <output-file>.png "
+
+    echo -e "\n$description_string\n"
+    echo -e "$usage_string\n"
+    echo "Default Options"
+    echo "$option_string"
+}
+
+while [ -n "$1" ];  
+do
+    case "$1" in
+        -f | --file )
+            shift
+            I_FILE=$1
+            ;;
+        -h | --help )
+            usage
+            exit
+            ;;
+        -t | --text )
+            shift
+            shopt -s extglob
+            MESSAGE=$1
+            MESSAGE_TOP="${MESSAGE%%*(,*)}"
+            MESSAGE_BOTTOM="${MESSAGE##*(*,)}"
+            shopt -u extglob
+            ;;
+        -o | --output )
+            shift
+            O_FILE=$1
+            ;;
+        -v | --verbose )
+            shift
+            verbose="verbose"
+            ;;
+        # * )
+        #     usage
+        #     exit 1
+        #     ;;
+    esac
+    shift
+done
+
+${CONVERT} \
+    ${I_FILE} \
+    -font impact \
+    -fill white \
+    -pointsize 84 \
+    -stroke black \
+    -strokewidth 3 \
+    -gravity north \
+    -annotate +0+20 "${MESSAGE_TOP}" -gravity south -annotate +0+20 "${MESSAGE_BOTTOM}" \
+    ${O_FILE}
+

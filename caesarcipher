@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+
+# caesarcipher: uses the Caesar Shift Cipher to encrypt/decrypt text.
+
+# This program is using the same method used in the book
+# "Introduction to Computer Science Using Python", by Charles Dierbach
+
+# Only works for key = 3
+
+terminate = False
+while not terminate:
+
+    # initialization
+    password_out = ''
+    case_changer = ord('a') - ord('A')
+
+    # key = 3
+    encryption_key = (('a', 'd'), ('b', 'e'), ('c', 'f'), ('d', 'g'),\
+            ('e', 'h'), ('f', 'i'), ('g', 'j'), ('h', 'k'),\
+            ('i', 'l'), ('j', 'm'),('k', 'n'), ('l', 'o'),\
+            ('m', 'p'), ('n', 'q'), ('o', 'r'), ('p', 's'),\
+            ('q', 't'), ('r', 'u'), ('s', 'v'), ('t', 'w'),\
+            ('u', 'x'), ('v', 'y'), ('w', 'z'), ('x', 'a'),\
+            ('y', 'b'), ('z', 'c'))
+
+    # greeting
+    print()
+    print('This program will encrypt and decrypt user passwords')
+    print('using the Caesar Cipher Method.')
+    print()
+
+    # get input
+    which = input('Enter (e) to encrypt and (d) to decrypt: ')
+
+    while which != 'e' and which != 'd':
+        which = input('\nError - Enter (e) to encrypt and (d) to decrypt: ')
+
+    encrypting = (which == 'e')
+
+    # get password
+    password_in = input('Enter password: ')
+
+    program_end = False
+
+    while not program_end:
+
+        # encryption/decryption
+        if encrypting:
+            from_index = 0
+            to_index = 1
+        else:
+            from_index = 1
+            to_index = 0
+
+        case_changer = ord('a') - ord('A')
+
+        for ch in password_in:
+            letter_found = False
+
+            for t in encryption_key:
+                if ('a' <= ch and ch <= 'z') and ch == t[from_index]:
+                    password_out = password_out + t[to_index]
+                    letter_found = True
+                elif ('A' <= ch and ch <= 'Z') and chr(ord(ch) + 32) ==\
+                        t[from_index]:
+                    password_out = password_out + chr(ord(t[to_index]) -\
+                            case_changer)
+                    letter_found = True
+
+            if not letter_found:
+                password_out = password_out + ch
+
+        # output
+        if encrypting:
+            print('Encrypted: ', password_out)
+        else:
+            print('Decrypted: ', password_out)
+
+        program_end = True
+        if program_end:
+            entry = input('\nAgain? (y/n): ')
+            if entry == 'n':
+                print('End of Program... \n')
+                terminate = True
+        
