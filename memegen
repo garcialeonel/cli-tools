@@ -70,10 +70,10 @@ do
             shift
             verbose="verbose"
             ;;
-        # * )
-        #     usage
-        #     exit 1
-        #     ;;
+        * )
+            usage
+            exit 1
+            ;;
     esac
     shift
 done
