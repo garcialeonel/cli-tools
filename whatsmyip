@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+
+# whatsmyip: displays ip address, hostname, and country as reported by browserleaks.com/ip
+
+import requests, bs4, os, subprocess
+
+# make a requests object
+res = requests.get('http://www.browserleaks.com/ip')
+
+# check for errors
+try:
+    res.raise_for_status()
+except Exception as exc:
+    print('There was a problem: %s' % (exc))
+
+# use BeautifulSoup4 to parse HTML data
+fileSoup = bs4.BeautifulSoup(res.text, features="lxml")
+# elem1 = fileSoup.select('#client-ip')
+# elem1 = fileSoup.find_all("span", id="client_ip") # site must've changed, had to edit this
+elem1 = fileSoup.find_all("span", id="client") # site must've changed, had to edit this
+elem2 = fileSoup.select('td')
+
+ip = str(elem1[0].getText())
+# hostname = os.popen("nslookup " + ip + "| awk -F= '{ print $2 }' | sed -n 5p").read()
+country = str(elem2[7].getText())
+state = str(elem2[8].getText())
+city = str(elem2[11].getText())
+
+print('\nPublic IP:',ip)
+# print('Hostname:',hostname.strip("\n"))
+print('Country:',country)
+print('State/Region:',state)
+print('City:',city)
+print('\nhttp://www.browserleaks.com/ip')
+
