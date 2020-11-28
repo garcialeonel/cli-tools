@@ -31,5 +31,4 @@ print('\nPublic IP:',ip)
 print('Country:',country)
 print('State/Region:',state)
 print('City:',city)
-print('\nhttp://www.browserleaks.com/ip')
-
+print('\nVisit http://www.browserleaks.com/ip for more info.')

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# datefile: renames file to "<filename-no-extension>.<date>.<file-extension>"
+datefile() {
+    filename="${1%.*}"
+    date=$(date +%Y-%m-%d)
+    extension="${1##*.}"
+    newname=$filename.$date.$extension
+    mv $1 $newname;
+    echo "Backed up $1 to $newname";
+    cp -p $newname $1;
+}
+
+for i in "$@"; do
+    datefile ${i}
+done
